@@ -12,11 +12,12 @@
 #' }
 #' @importFrom  magpiesets reportingnames
 #' @importFrom  madrat calcOutput
-
+#' @import mrvalidation
+#' @export
 
 fullValidHistoricalNitrogenBudgets<-function(){
 
-  aggregate= "glo"
+  aggregate=FALSE
   
   NitrogenBudgetCropland <- calcOutput("ValidNitrogenBudgetCropland",aggregate = aggregate)
   NitrogenBudgetCropland[,,"Resources|Nitrogen|Cropland Budget|Balance|+|Soil Organic Matter Loss (Mt Nr/yr)"] <- -NitrogenBudgetCropland[,,"Resources|Nitrogen|Cropland Budget|Balance|+|Soil Organic Matter Loss (Mt Nr/yr)" ]
@@ -35,16 +36,17 @@ fullValidHistoricalNitrogenBudgets<-function(){
   trade<-calcOutput("ValidTrade",nutrient="nr", aggregate = aggregate,net_trade=FALSE,equalized=FALSE)
   
   deposition <- calcOutput("ValidNitrogenAtmosphericDeposition",aggregate = aggregate,datasource="Nsurplus2")
+  
   x8 <- calcOutput("ValidNitrogenBudgetPlanet",aggregate = aggregate)
   x9 <-  calcOutput("ValidFeed",nutrient="nr",aggregate = aggregate)
   x10 <- calcOutput("ValidManure",aggregate = aggregate)
   x11 <- calcOutput("ValidNitrogenPollution",aggregate = aggregate,datasource="Nsurplus2")
-  x12 <- a<-calcOutput("ValidNutrientBudgetLivestock",aggregate = aggregate)
+  x12 <- calcOutput("ValidNutrientBudgetLivestock",aggregate = aggregate)
   x13 <- calcOutput("ValidNutrientBudgetFoodWasteAndSewage",aggregate = aggregate)
   x14 <- calcOutput("ValidNutrientBudgetFoodProcessing",aggregate = aggregate,detail=FALSE,nutrient="nr")
   x15 <- calcOutput("ValidNutrientWasteBudget",aggregate =aggregate)
   x16 <- setNames(dimSums(x11[,,c(
-    "Emissions|direct N2O-N emissions|Agriculture|+|Animal waste management (Mt Nr/yr)",
+    "Emissions|N2O-N|Direct|Agriculture|+|Animal waste management (Mt Nr/yr)",
     "Emissions|NH3-N|Agriculture|+|Animal waste management (Mt Nr/yr)",
     "Emissions|NO2-N|Agriculture|+|Animal waste management (Mt Nr/yr)",
     "Emissions|NO3-N|Agriculture|+|Animal waste management (Mt Nr/yr)",
