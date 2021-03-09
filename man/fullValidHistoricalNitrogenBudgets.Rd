@@ -4,7 +4,10 @@
 \alias{fullValidHistoricalNitrogenBudgets}
 \title{fullValidHistoricalNitrogenBudgets}
 \usage{
-fullValidHistoricalNitrogenBudgets()
+fullValidHistoricalNitrogenBudgets(aggregate = "glo")
+}
+\arguments{
+\item{aggregate}{setting for aggregate, e.g.: TRUE, FALSE, "glo"}
 }
 \value{
 magpie object

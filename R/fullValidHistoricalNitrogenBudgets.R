@@ -1,6 +1,6 @@
 #' @title fullValidHistoricalNitrogenBudgets
 #' @description creates historical outputs of nitrogen budgets
-#' 
+#' @param aggregate setting for aggregate, e.g.: TRUE, FALSE, "glo"
 #' @return magpie object
 #' @author Benjamin Leon Bodirsky
 #' @seealso
@@ -15,10 +15,8 @@
 #' @import mrvalidation
 #' @export
 
-fullValidHistoricalNitrogenBudgets<-function(){
+fullValidHistoricalNitrogenBudgets<-function(aggregate="glo"){
 
-  aggregate=FALSE
-  
   NitrogenBudgetCropland <- calcOutput("ValidNitrogenBudgetCropland",aggregate = aggregate)
   NitrogenBudgetCropland[,,"Resources|Nitrogen|Cropland Budget|Balance|+|Soil Organic Matter Loss (Mt Nr/yr)"] <- -NitrogenBudgetCropland[,,"Resources|Nitrogen|Cropland Budget|Balance|+|Soil Organic Matter Loss (Mt Nr/yr)" ]
   
