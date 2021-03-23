@@ -24,7 +24,7 @@ calcValidSNUpE<-function(datasource="Bodirsky"){
   } else if (datasource=="Lassaletta2014"){
     budget<-readSource("Lassaletta2014",subtype="budget")
     budget[,,"fixation_crops"]=-budget[,,"fixation_crops"]
-    inputs<- c("fertilizer","manure","deposition")
+    inputs<- c("fertilizer","manure_conf","deposition")
     outputs<-c("harvest","fixation_crops")
     snupe<-dimSums(budget[,,outputs])/dimSums(budget[,,inputs])
     weight<-dimSums(budget[,,inputs])
