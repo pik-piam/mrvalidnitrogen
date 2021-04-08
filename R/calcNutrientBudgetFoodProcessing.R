@@ -12,7 +12,7 @@
 calcNutrientBudgetFoodProcessing<-function(){
   massbalance=calcOutput("FAOmassbalance",aggregate = FALSE)[,,c("wm","ge","nr")]
   demand<-massbalance[,,"households"]
-  unprocessed <- dimSums(massbalance[,,c("food","milling")],dim=c(3.2)) 
+  unprocessed <- dimSums(massbalance[,,c("food","flour1")],dim=c(3.2)) 
   food<-dimSums(demand,dim=3.2)
   food_processing_loss = unprocessed-food
   

@@ -1,17 +1,20 @@
 Package: mrvalidnitrogen
 Type: Package
 Title: madrat data preparation for validation purposes of nitrogen budgets
-Version: 1.1.2
-Date: 2021-03-23
+Version: 1.2.0
+Date: 2021-04-08
 Authors@R: c(person("Benjamin Leon", "Bodirsky", email = "bodirsky@pik-potsdam.de", role = c("aut","cre")))
 Description: Package contains routines to prepare data for validation exercises.
 Depends:
     R(>= 2.10.0),
     magclass(>= 3.17),
     madrat(>= 1.31),
-    mrvalidation
+    mrvalidation,
+    utils
 Imports:
-    magpiesets
+    magpiesets,
+    dplyr,
+    reshape2
 Suggests:
     testthat,
     covr

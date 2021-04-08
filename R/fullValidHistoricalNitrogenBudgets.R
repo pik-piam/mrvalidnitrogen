@@ -54,12 +54,30 @@ fullValidHistoricalNitrogenBudgets<-function(aggregate="glo"){
   x18<-calcOutput("ValidNitrogenBudgetPasture",aggregate = aggregate)
   x19<-calcOutput("ValidNitrogenBudgetOcean",aggregate = aggregate)
   #x20<-calcOutput("ValidNutrientBudgetSewage",nutrient="nr",aggregate = aggregate) # duplicate
+
+  crop_bnf_detail <- calcOutput("NitrogenFixationPast", fixation_types="fixation_crops",sum_plantparts=TRUE,cellular=FALSE,irrigation=FALSE,aggregate = aggregate)
+  crop_bnf_forage <- setNames(crop_bnf_detail[,,"foddr"],paste0("Resources|Nitrogen|Cropland Budget|Inputs|Biological Fixation Symbiotic Crops|+|",reportingnames("foddr")," (Mt Nr/yr)"))
+  crop_bnf_crops <- setNames(dimSums(crop_bnf_detail[,,"foddr",invert=TRUE],dim="ItemCodeItem"),paste0("Resources|Nitrogen|Cropland Budget|Inputs|Biological Fixation Symbiotic Crops|+|Crops (Mt Nr/yr)"))
+  res_ag <- collapseNames(calcOutput("ResBiomass",cellular=FALSE,plantparts="ag",irrigation=FALSE,attributes="nr",aggregate=aggregate))
+  res_bg <- collapseNames(calcOutput("ResBiomass",cellular=FALSE,plantparts="bg",irrigation=FALSE,attributes="nr",aggregate=aggregate))
+  res_ag_forage <- setNames(res_ag[,,"foddr"],paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|Aboveground Crop Residues|+|",reportingnames("foddr")," (Mt Nr/yr)"))
+  res_ag_crops <- setNames(dimSums(res_ag[,,"foddr",invert=TRUE],dim="ItemCodeItem"),paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|Aboveground Crop Residues|+|Crops (Mt Nr/yr)"))
+  res_bg_forage <- setNames(res_bg[,,"foddr"],paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|Belowground Crop Residues|+|",reportingnames("foddr")," (Mt Nr/yr)"))
+  res_bg_crops <- setNames(dimSums(res_bg[,,"foddr",invert=TRUE],dim="ItemCodeItem"),paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|Belowground Crop Residues|+|Crops (Mt Nr/yr)"))
+  foragesplit = mbind(
+    crop_bnf_forage,crop_bnf_crops , 
+    res_ag_forage ,res_ag_crops ,
+    res_bg_forage ,res_bg_crops
+  )
+  foragesplit=add_dimension(foragesplit,dim = 3.1,add = "scenario",nm = "historical")
+  foragesplit=add_dimension(foragesplit,dim = 3.1,add = "model",nm = "Nsurplus2")
   
   out=mbind(NitrogenBudgetCropland,
             demand,production,
             crop_uptake,
             trade,
-            deposition,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19)
+            deposition,x8,x9,x10,x11,x12,x13,x14,x15,x16,x17,x18,x19,
+            foragesplit)
   
   return(out)
 }
