@@ -1,6 +1,7 @@
-ValidationKey: '2247000'
+ValidationKey: '2272501'
 AutocreateReadme: yes
 AcceptedWarnings:
 - 'Warning: package ''.*'' was built under R version'
 - 'Warning: namespace ''.*'' is not available and has been replaced'
 AcceptedNotes: ~
+allowLinterWarnings: yes
