@@ -1,6 +1,6 @@
 # madrat data preparation for validation purposes of nitrogen budgets
 
-R package **mrvalidnitrogen**, version **1.2.1**
+R package **mrvalidnitrogen**, version **1.4.1**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/mrvalidnitrogen)](https://cran.r-project.org/package=mrvalidnitrogen)    
 
@@ -38,7 +38,9 @@ In case of questions / problems please contact Benjamin Leon Bodirsky <bodirsky@
 
 To cite package **mrvalidnitrogen** in publications use:
 
-Bodirsky B (2021). _mrvalidnitrogen: madrat data preparation for validationpurposes of nitrogen budgets_. R package version 1.2.1, <URL:https://github.com/pik-piam/mrvalidnitrogen>.
+Bodirsky B (2021). _mrvalidnitrogen: madrat data preparation for validation purposes of
+nitrogen budgets_. R package version 1.4.1, <URL:
+https://github.com/pik-piam/mrvalidnitrogen>.
 
 A BibTeX entry for LaTeX users is
 
@@ -47,7 +49,7 @@ A BibTeX entry for LaTeX users is
   title = {mrvalidnitrogen: madrat data preparation for validation purposes of nitrogen budgets},
   author = {Benjamin Leon Bodirsky},
   year = {2021},
-  note = {R package version 1.2.1},
+  note = {R package version 1.4.1},
   url = {https://github.com/pik-piam/mrvalidnitrogen},
 }
 ```
