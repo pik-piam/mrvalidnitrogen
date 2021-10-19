@@ -58,12 +58,13 @@ fullVALIDHISTORICALNITROGENBUDGETS <- function(aggregate = "glo") {
   crop_bnf_detail <- calcOutput("NitrogenFixationPast", fixation_types = "fixation_crops", sum_plantparts = TRUE, cellular = FALSE, irrigation = FALSE, aggregate = aggregate)
   crop_bnf_forage <- setNames(crop_bnf_detail[, , "foddr"], paste0("Resources|Nitrogen|Cropland Budget|Inputs|Biological Fixation Symbiotic Crops|+|", reportingnames("foddr"), " (Mt Nr/yr)"))
   crop_bnf_crops <- setNames(dimSums(crop_bnf_detail[, , "foddr", invert = TRUE], dim = "ItemCodeItem"), paste0("Resources|Nitrogen|Cropland Budget|Inputs|Biological Fixation Symbiotic Crops|+|Crops (Mt Nr/yr)"))
-  res_ag <- collapseNames(calcOutput("ResBiomass", cellular = FALSE, plantparts = "ag", irrigation = FALSE, attributes = "nr", aggregate = aggregate))
-  res_bg <- collapseNames(calcOutput("ResBiomass", cellular = FALSE, plantparts = "bg", irrigation = FALSE, attributes = "nr", aggregate = aggregate))
+  res_ag <- collapseNames(calcOutput("ResBiomass", cellular = FALSE, plantparts = "ag", irrigation = FALSE, attributes = "nr", aggregate = aggregate))[,getYears(crop_bnf_crops),]
+  res_bg <- collapseNames(calcOutput("ResBiomass", cellular = FALSE, plantparts = "bg", irrigation = FALSE, attributes = "nr", aggregate = aggregate))[,getYears(crop_bnf_crops),]
   res_ag_forage <- setNames(res_ag[, , "foddr"], paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|Aboveground Crop Residues|+|", reportingnames("foddr"), " (Mt Nr/yr)"))
   res_ag_crops <- setNames(dimSums(res_ag[, , "foddr", invert = TRUE], dim = "ItemCodeItem"), paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|Aboveground Crop Residues|+|Crops (Mt Nr/yr)"))
   res_bg_forage <- setNames(res_bg[, , "foddr"], paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|Belowground Crop Residues|+|", reportingnames("foddr"), " (Mt Nr/yr)"))
   res_bg_crops <- setNames(dimSums(res_bg[, , "foddr", invert = TRUE], dim = "ItemCodeItem"), paste0("Resources|Nitrogen|Cropland Budget|Withdrawals|Belowground Crop Residues|+|Crops (Mt Nr/yr)"))
+  
   foragesplit <- mbind(
     crop_bnf_forage, crop_bnf_crops,
     res_ag_forage, res_ag_crops,
@@ -77,7 +78,7 @@ fullVALIDHISTORICALNITROGENBUDGETS <- function(aggregate = "glo") {
     past              <- findset("past")
     relevant_nutrients <- c("nr")
     
-    res_biomass        <- collapseNames(calcOutput("ResBiomass", cellular=F, plantparts="ag", aggregate = FALSE, scenario="default"))[,,relevant_nutrients]
+    res_biomass        <- collapseNames(calcOutput("ResBiomass", cellular=F, plantparts="ag", aggregate = FALSE, scenario="default"))[,,relevant_nutrients][,past,]
     
     burnshr           <- calcOutput("ResCombustEff",aggregate = FALSE)[,,getNames(res_biomass,dim=1)]
     dev_state_past    <- collapseNames(calcOutput("DevelopmentState",aggregate = F)[,past,"SSP2"])
@@ -86,8 +87,11 @@ fullVALIDHISTORICALNITROGENBUDGETS <- function(aggregate = "glo") {
     burn                          <- burn - ash  
     # assume that forage residues are only burned, but not harvested
     production_forage = dimSums(res_biomass[,,"foddr"],dim = c(1,3))
+    getItems(production_forage,dim = 1) <- "GLO"
     burn_forage = setNames(dimSums(burn[,,"foddr"],dim = c(1,3)), "Resources|Nitrogen|Residue Burning Budget|Inputs|Burned Residues|+|Forages (Mt Nr/yr)")
     burn_crop = setNames(dimSums(burn[,,"foddr",invert = T],dim=c(1,3)),"Resources|Nitrogen|Residue Burning Budget|Inputs|Burned Residues|+|Crops (Mt Nr/yr)")
+    getItems(burn_forage,dim = 1) <- "GLO"
+    getItems(burn_crop,dim = 1) <- "GLO"
     
     recycled_forage =  setNames(production_forage - burn_forage,"Resources|Nitrogen|Cropland Budget|Inputs|Recycled Aboveground Crop Residues|+|Forages (Mt Nr/yr)")
     recycled_crop = setNames(
@@ -190,10 +194,15 @@ fullVALIDHISTORICALNITROGENBUDGETS <- function(aggregate = "glo") {
     paper= x[,,"Paper and paperboard"][,,"production"] * 0.00225
     rest = x[,,c("Other industrial roundwood", "Sawnwood","Wood-based panels")][,,"production"] * 0.0009 * 0.6 
     out=mbind(paper, rest)/1000000
+    out<-collapseNames(out)[,past,]
+    
+    forest_prod <- calcOutput("FAOmassbalance",aggregate = F)[,,"dm"][,,"production"][,,c("wood","woodfuel")]*0.00159
+    forest_prod <- collapseNames(forest_prod)
+    out<-mbind(out,forest_prod)
     
     ### validation_format
     
-    out<-collapseNames(out)
+    
     
     out<-add_dimension(x=out,dim = 3.1,add = "scenario",nm = "history")
     out<-add_dimension(x=out,dim = 3.1,add = "model",nm = "MADRAT")
@@ -201,8 +210,9 @@ fullVALIDHISTORICALNITROGENBUDGETS <- function(aggregate = "glo") {
     return(out)
   }
   
-  forestry <- forestry_products()[,getYears(trade),]
+  forestry <- forestry_products()[,past,]
   forestry <- dimSums(forestry,dim=1)
+  getItems(forestry,dim=1) = "GLO"
   
   out <- mbind(
     NitrogenBudgetCropland,
