@@ -108,7 +108,7 @@ fullVALIDHISTORICALNITROGENBUDGETS <- function(aggregate = "glo") {
     
   
   forestry_products=function(){
-    
+    past              <- findset("past")
     x <- readSource("FAO_online","ForestProdTrade")
     
     ## Remove distinction between coniferous and non-coniferous part
@@ -198,6 +198,7 @@ fullVALIDHISTORICALNITROGENBUDGETS <- function(aggregate = "glo") {
     
     forest_prod <- calcOutput("FAOmassbalance",aggregate = F)[,,"dm"][,,"production"][,,c("wood","woodfuel")]*0.00159
     forest_prod <- collapseNames(forest_prod)
+    getItems(forest_prod,dim = 3.1) = paste0(getItems(forest_prod,dim = 3.1)," (Mt Nr/yr)")
     out<-mbind(out,forest_prod)
     
     ### validation_format
