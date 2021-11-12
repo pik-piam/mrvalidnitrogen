@@ -10,7 +10,7 @@
 
 calcWasteGen <- function(pc=TRUE, form="LogLog"){
   
-gdppc <- calcOutput("GDPpc",aggregate=F)[,,c("SSP1", "SSP2", "SSP3", "SSP4", "SSP5")]
+gdppc <- calcOutput("GDPpc", naming = "scenario", aggregate = FALSE)[ , , c("SSP1", "SSP2", "SSP3", "SSP4", "SSP5")]
 
 if(form=="LogLog"){
   pred <- 0.37*log(gdppc) + 2.16
