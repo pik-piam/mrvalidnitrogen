@@ -1,6 +1,6 @@
 # madrat data preparation for validation purposes of nitrogen budgets
 
-R package **mrvalidnitrogen**, version **1.6.0**
+R package **mrvalidnitrogen**, version **1.6.1**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/mrvalidnitrogen)](https://cran.r-project.org/package=mrvalidnitrogen)  [![R build status](https://github.com/pik-piam/mrvalidnitrogen/workflows/check/badge.svg)](https://github.com/pik-piam/mrvalidnitrogen/actions) [![codecov](https://codecov.io/gh/pik-piam/mrvalidnitrogen/branch/master/graph/badge.svg)](https://codecov.io/gh/pik-piam/mrvalidnitrogen) [![r-universe](https://pik-piam.r-universe.dev/badges/mrvalidnitrogen)](https://pik-piam.r-universe.dev/ui#builds)
 
@@ -38,7 +38,7 @@ In case of questions / problems please contact Benjamin Leon Bodirsky <bodirsky@
 
 To cite package **mrvalidnitrogen** in publications use:
 
-Bodirsky B (2021). _mrvalidnitrogen: madrat data preparation for validation purposes of nitrogen budgets_. R package version 1.6.0, <URL: https://github.com/pik-piam/mrvalidnitrogen>.
+Bodirsky B (2021). _mrvalidnitrogen: madrat data preparation for validation purposes of nitrogen budgets_. R package version 1.6.1, <URL: https://github.com/pik-piam/mrvalidnitrogen>.
 
 A BibTeX entry for LaTeX users is
 
@@ -47,8 +47,7 @@ A BibTeX entry for LaTeX users is
   title = {mrvalidnitrogen: madrat data preparation for validation purposes of nitrogen budgets},
   author = {Benjamin Leon Bodirsky},
   year = {2021},
-  note = {R package version 1.6.0},
+  note = {R package version 1.6.1},
   url = {https://github.com/pik-piam/mrvalidnitrogen},
 }
 ```
-
