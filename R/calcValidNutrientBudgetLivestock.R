@@ -28,6 +28,7 @@ calcValidNutrientBudgetLivestock<-function(datasource="Bodirsky",nutrient="nr"){
     
     slaughtermass<-calcOutput("Slaughtermass",aggregate=FALSE)[,,kli][,,nutrient]
     mb3<-slaughtermass-mb1
+    mb2<-mb2-slaughtermass
     
     out<-mbind(
       add_dimension(mb1,dim = 3.1,nm = reportingnames("kli")),
