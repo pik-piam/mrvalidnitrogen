@@ -4,7 +4,6 @@ calcValidNitrogenBudgetPlanet<-function(){
   past<-findset("past")
   emis<-calcOutput("EmissionInventory",
                    datasource="Nsurplus2",
-                   mapping=NULL,
                    aggregate=FALSE)[,,c("no2_n","nh3_n")]
   
   emis<-emis[,,c("industry","transport","luc")]
