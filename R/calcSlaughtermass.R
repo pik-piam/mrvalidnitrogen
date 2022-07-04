@@ -13,4 +13,3 @@ calcSlaughtermass<-function(){
               description="Mass of slaughtered animals.")
   )                   
 }
-
