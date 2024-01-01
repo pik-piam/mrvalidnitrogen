@@ -27,4 +27,3 @@ calcNitrogenBudgetLivestock<-function(){
     unit="Mt Nr",
     description="Nitrogen budget on croplands for historical period"))
 }
-
