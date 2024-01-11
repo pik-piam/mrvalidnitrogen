@@ -10,7 +10,7 @@ calcWasteDistrib()
 Magpie object of waste types to waste distribution,  percentage
 }
 \description{
-rule-based distribution of waste by composition type to disposal type. 
+rule-based distribution of waste by composition type to disposal type.
 returns list of magpie object, share of total disposal
 }
 \examples{

@@ -55,7 +55,7 @@ fullVALIDHISTORICALNITROGENBUDGETS <- function(aggregate = "glo") {
   x19 <- calcOutput("ValidNitrogenBudgetOcean", aggregate = aggregate)
   # x20<-calcOutput("ValidNutrientBudgetSewage",nutrient="nr",aggregate = aggregate) # duplicate
 
-  crop_bnf_detail <- calcOutput("NitrogenFixationPast", fixation_types = "fixation_crops", sum_plantparts = TRUE, cellular = FALSE, irrigation = FALSE, aggregate = aggregate)
+  crop_bnf_detail <- calcOutput("NitrogenFixationBNF", sum_plantparts = TRUE, cellular = FALSE, irrigation = FALSE, aggregate = aggregate)
   crop_bnf_forage <- setNames(crop_bnf_detail[, , "foddr"], paste0("Resources|Nitrogen|Cropland Budget|Inputs|Biological Fixation Symbiotic Crops|+|", reportingnames("foddr"), " (Mt Nr/yr)"))
   crop_bnf_crops <- setNames(dimSums(crop_bnf_detail[, , "foddr", invert = TRUE], dim = "ItemCodeItem"), paste0("Resources|Nitrogen|Cropland Budget|Inputs|Biological Fixation Symbiotic Crops|+|Crops (Mt Nr/yr)"))
   res_ag <- collapseNames(calcOutput("ResBiomass", cellular = FALSE, plantparts = "ag", irrigation = FALSE, attributes = "nr", aggregate = aggregate))[,getYears(crop_bnf_crops),]
